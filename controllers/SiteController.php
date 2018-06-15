@@ -63,21 +63,23 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
         // build a DB query to get all articles with status = 1
-        $query = Article::find()->where(['status' => 1]);
+        $query = Article::find();
 
-// get the total number of articles (but do not fetch the article data yet)
+        // get the total number of articles (but do not fetch the article data yet)
         $count = $query->count();
 
-// create a pagination object with the total count
-        $pagination = new Pagination(['totalCount' => $count]);
+        // create a pagination object with the total count
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 1]);
 
-// limit the query using the pagination and retrieve the articles
+        // limit the query using the pagination and retrieve the articles
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
-        return $this->render('index');
+        return $this->render('index', [
+            'articles' =>$articles,
+            'pagination' => $pagination
+        ]);
     }
 
     /**
