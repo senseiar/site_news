@@ -13,7 +13,6 @@
 
                             <h1 class="entry-title"><a href="blog.html">Home is peaceful place</a></h1>
 
-
                         </header>
                         <div class="entry-content">
                             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod

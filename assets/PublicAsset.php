@@ -31,12 +31,12 @@ class PublicAsset extends AssetBundle
     ];
     public $js = [
         "public/js/jquery-1.11.3.min.js",
+        "public/js/slick.min.js",
         "public/js/bootstrap.min.js",
         "public/js/owl.carousel.min.js",
         "public/js/jquery.stickit.min.js",
         "public/js/menu.js",
         "public/js/scripts.js",
-
     ];
     public $depends = [
         'yii\web\YiiAsset',
