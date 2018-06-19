@@ -1,13 +1,58 @@
 <?php
     // use yii\helpers\Url;
-    use yii\widgets\LinkPager;
+use yii\bootstrap\Carousel;
+//use yii\widgets\LinkPager;
     ?>
 <!--main content start-->
 
 <div class="main-content">
     <div class="container">
         <div class="row">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="<?= $recent[0]->getImage();?>" />
+                        <div class="carousel-caption d-none d-md-block">
+                        <h3><?= $recent[0]->title;?></h3>
+                        <p><?= $recent[0]->description ;?></p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="<?= $recent[1]->getImage();?>" />
+                        <div class="carousel-caption d-none d-md-block">
+                        <h3><?= $recent[1]->title;?></h3>
+                        <p><?= $recent[1]->description;?></p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="<?= $recent[2]->getImage();?>" />
+                        <div class="carousel-caption d-none d-md-block">
+                        <h3><?= $recent[2]->title;?></h3>
+                        <p><?= $recent[2]->description;?></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
             <div class="col-md-8">
+
+
                 <?php foreach ($categories as $category): ?>
                 <h2><a href="#"><?= $category->title; ?></a></h2>
                 <?php foreach ($news[$category->id] as $article):?>
