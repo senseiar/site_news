@@ -17,29 +17,31 @@ use yii\bootstrap\Carousel;
                 </ol>
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
+              <?php
+              $i = 0; 
+              foreach ($recent as $article): ?>
+                    <?php if ($i == 0)
+                    { ?>
                     <div class="item active">
-                        <img src="<?= $recent[0]->getImage();?>" />
+                        <img src="<?= $article->getImage();?>" />
                         <div class="carousel-caption d-none d-md-block">
-                        <h3><?= $recent[0]->title;?></h3>
-                        <p><?= $recent[0]->description ;?></p>
+                        <h3><?= $article->title;?></h3>
+                        <p><?= $article->description ;?></p>
                         </div>
                     </div>
-                    <div class="item">
-                        <img src="<?= $recent[1]->getImage();?>" />
-                        <div class="carousel-caption d-none d-md-block">
-                        <h3><?= $recent[1]->title;?></h3>
-                        <p><?= $recent[1]->description;?></p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="<?= $recent[2]->getImage();?>" />
-                        <div class="carousel-caption d-none d-md-block">
-                        <h3><?= $recent[2]->title;?></h3>
-                        <p><?= $recent[2]->description;?></p>
-                        </div>
-                    </div>
-                </div>
+                    <?php } else { ?>
 
+                    <div class="item">
+                        <img src="<?= $article->getImage();?>" />
+                        <div class="carousel-caption d-none d-md-block">
+                        <h3><?= $article->title;?></h3>
+                        <p><?= $article->description;?></p>
+                        </div>
+                    </div>
+                <?php } ?>
+                <?php $i++; ?>
+                <?php endforeach; ?>
+            </div>
                 <!-- Left and right controls -->
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left"></span>
