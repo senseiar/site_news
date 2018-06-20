@@ -159,4 +159,5 @@ class Article extends \yii\db\ActiveRecord
     {
         return Article::find()->orderBy('date desc')->limit(3)->all();
     }
+
 }
