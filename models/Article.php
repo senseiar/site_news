@@ -149,4 +149,14 @@ class Article extends \yii\db\ActiveRecord
     {
         ArticleTag::deleteAll(['article_id'=>$this->id]);
     } 
+
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date); 
+    }
+
+    public static function getRecent()
+    {
+        return Article::find()->orderBy('date desc')->limit(3)->all();
+    }
 }

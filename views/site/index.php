@@ -1,6 +1,5 @@
 <?php
-    // use yii\helpers\Url;
-use yii\bootstrap\Carousel;
+use yii\helpers\Url;
 //use yii\widgets\LinkPager;
     ?>
 <!--main content start-->
@@ -25,7 +24,7 @@ use yii\bootstrap\Carousel;
                     <div class="item active">
                         <img src="<?= $article->getImage();?>" />
                         <div class="carousel-caption d-none d-md-block">
-                        <h3><?= $article->title;?></h3>
+                        <h3><a href="<?= Url::toRoute(['site/view', 'id'=>$article->id]) ?>" ><?= $article->title;?></a></h3>
                         <p><?= $article->description ;?></p>
                         </div>
                     </div>
@@ -34,7 +33,7 @@ use yii\bootstrap\Carousel;
                     <div class="item">
                         <img src="<?= $article->getImage();?>" />
                         <div class="carousel-caption d-none d-md-block">
-                        <h3><?= $article->title;?></h3>
+                        <h3><a href="<?= Url::toRoute(['site/view', 'id'=>$article->id]) ?>" ><?= $article->title;?></a></h3>
                         <p><?= $article->description;?></p>
                         </div>
                     </div>
@@ -56,7 +55,7 @@ use yii\bootstrap\Carousel;
 
 
                 <?php foreach ($categories as $category): ?>
-                <h2><a href="#"><?= $category->title; ?></a></h2>
+                <h2><a href="<?= Url::toRoute(['site/view', 'id'=>$article->id]) ?>"><?= $category->title; ?></a></h2>
                 <?php foreach ($news[$category->id] as $article):?>
                        <article class="post">
                     <div class="post-thumb">
@@ -78,7 +77,7 @@ use yii\bootstrap\Carousel;
                             </div>
                         </div>
                         <div class="social-share">
-                            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a></span>
+                            <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> <?= $article->getDate(); ?></span>
                             <ul class="text-center pull-right">
                                 <li><a class="s-facebook" href="#"><i class="fa fa-eye"></i></a></li><?= (int) $article->viewed ?>
                             </ul>
@@ -95,23 +94,7 @@ use yii\bootstrap\Carousel;
                         <h3 class="widget-title text-uppercase text-center">Popular Posts</h3>
 
                         <div class="popular-post">
-
-
                             <a href="#" class="popular-img"><img src="/public/images/p1.jpg" alt="">
-
-                                <div class="p-overlay"></div>
-                            </a>
-
-                            <div class="p-content">
-                                <a href="#" class="text-uppercase">Home is peaceful Place</a>
-                                <span class="p-date">February 15, 2016</span>
-
-                            </div>
-                        </div>
-                        <div class="popular-post">
-
-                            <a href="#" class="popular-img"><img src="/public/images/p1.jpg" alt="">
-
                                 <div class="p-overlay"></div>
                             </a>
 
@@ -120,71 +103,12 @@ use yii\bootstrap\Carousel;
                                 <span class="p-date">February 15, 2016</span>
                             </div>
                         </div>
-                        <div class="popular-post">
-
-
-                            <a href="#" class="popular-img"><img src="/public/images/p1.jpg" alt="">
-
-                                <div class="p-overlay"></div>
-                            </a>
-
-                            <div class="p-content">
-                                <a href="#" class="text-uppercase">Home is peaceful Place</a>
-                                <span class="p-date">February 15, 2016</span>
-                            </div>
                         </div>
                     </aside>
                     <aside class="widget pos-padding">
                         <h3 class="widget-title text-uppercase text-center">Recent Posts</h3>
 
                         <div class="thumb-latest-posts">
-
-
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#" class="popular-img"><img src="/public/images/r-p.jpg" alt="">
-                                        <div class="p-overlay"></div>
-                                    </a>
-                                </div>
-                                <div class="p-content">
-                                    <a href="#" class="text-uppercase">Home is peaceful Place</a>
-                                    <span class="p-date">February 15, 2016</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="thumb-latest-posts">
-
-
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#" class="popular-img"><img src="/public/images/r-p.jpg" alt="">
-                                        <div class="p-overlay"></div>
-                                    </a>
-                                </div>
-                                <div class="p-content">
-                                    <a href="#" class="text-uppercase">Home is peaceful Place</a>
-                                    <span class="p-date">February 15, 2016</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="thumb-latest-posts">
-
-
-                            <div class="media">
-                                <div class="media-left">
-                                    <a href="#" class="popular-img"><img src="/public/images/r-p.jpg" alt="">
-                                        <div class="p-overlay"></div>
-                                    </a>
-                                </div>
-                                <div class="p-content">
-                                    <a href="#" class="text-uppercase">Home is peaceful Place</a>
-                                    <span class="p-date">February 15, 2016</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="thumb-latest-posts">
-
-
                             <div class="media">
                                 <div class="media-left">
                                     <a href="#" class="popular-img"><img src="/public/images/r-p.jpg" alt="">
@@ -201,30 +125,12 @@ use yii\bootstrap\Carousel;
                     <aside class="widget border pos-padding">
                         <h3 class="widget-title text-uppercase text-center">Categories</h3>
                         <ul>
+                          <?php foreach($categories as $category): ?>
                             <li>
-                                <a href="#">Food & Drinks</a>
-                                <span class="post-count pull-right"> (2)</span>
+                                <a href="#"><?= $category->title ?></a>
+                                <span class="post-count pull-right"> (<?= $category->getArticlesCount(); ?>)</span>
                             </li>
-                            <li>
-                                <a href="#">Travel</a>
-                                <span class="post-count pull-right"> (2)</span>
-                            </li>
-                            <li>
-                                <a href="#">Business</a>
-                                <span class="post-count pull-right"> (2)</span>
-                            </li>
-                            <li>
-                                <a href="#">Story</a>
-                                <span class="post-count pull-right"> (2)</span>
-                            </li>
-                            <li>
-                                <a href="#">DIY & Tips</a>
-                                <span class="post-count pull-right"> (2)</span>
-                            </li>
-                            <li>
-                                <a href="#">Lifestyle</a>
-                                <span class="post-count pull-right"> (2)</span>
-                            </li>
+                        <?php endforeach; ?>
                         </ul>
                     </aside>
                 </div>

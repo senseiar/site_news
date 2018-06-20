@@ -64,20 +64,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // build a DB query to get all articles
 
-        // get the total number of articles (but do not fetch the article data yet)
+        $recent =  Article::getRecent();
+        
+        $categories = Category::getAll();
 
-        $recent =  Article::find()->orderBy('date asc')->limit(3)->all();
-        $categories = Category::find()->all();
-
-        //$news =  Article::find()->where(['category_id' => $categories[0]->id])->orderBy('date asc')->limit(5)->all();
-
-         $news = [];
-          foreach ($categories as $cat) {
-              $art = Article::find()->where(['category_id' => $cat->id])->limit(5)->all();
-              $news[$cat->id] = $art;
-          }
+        $news = [];
+        foreach ($categories as $cat) {
+            $art = Article::find()->where(['category_id' => $cat->id])->limit(5)->all();
+            $news[$cat->id] = $art;
+        }
 
         return $this->render('index', [
             'recent' => $recent,
@@ -148,10 +144,12 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionSingle()
+    public function actionView()
     {
         return $this->render('single');
     }
+
+
 
     public function actionCategory()
     {
