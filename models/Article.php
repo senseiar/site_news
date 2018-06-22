@@ -72,16 +72,6 @@ class Article extends \yii\db\ActiveRecord
         return $this->save(false);
     }
 
-    public function getImage()
-    {
-        if($this->image)
-        {
-            return '/uploads/' . $this->image;
-        }
-        else {
-            return '/no-image.png';
-        }
-    }
 
     public function deleteImage()
     {
@@ -145,6 +135,11 @@ class Article extends \yii\db\ActiveRecord
         }        
     }
 
+    public function getImage()
+    {
+        return ($this->image) ? '/uploads/' . $this->image : '/no-image.png';
+    }
+
     public function clearCurrentTags()
     {
         ArticleTag::deleteAll(['article_id'=>$this->id]);
@@ -158,6 +153,33 @@ class Article extends \yii\db\ActiveRecord
     public static function getRecent()
     {
         return Article::find()->orderBy('date desc')->limit(3)->all();
+    }
+
+    public function saveArticle()
+    {
+        $this->user_id = Yii::$app->user->id;
+        return $this->save();
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['article_id' => 'id']);
+    }
+
+    public function getArticleComments()
+    {
+        return $this->getComments()->where(['status' => 1])->all();
+    }
+
+    public function viewedCounter()
+    {
+        $this->viewed += 1;
+        return $this->save(false);
+    }
+
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id'=>'user_id']);
     }
 
 }

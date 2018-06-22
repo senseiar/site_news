@@ -1,18 +1,15 @@
 <?php
-
 namespace app\models;
-
 use Yii;
 use yii\web\IdentityInterface;
-
 /**
  * This is the model class for table "user".
  *
- * @property int $id
+ * @property integer $id
  * @property string $name
  * @property string $email
  * @property string $password
- * @property int $isAdmin
+ * @property integer $isAdmin
  * @property string $photo
  *
  * @property Comment[] $comments
@@ -20,15 +17,14 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
         return 'user';
     }
-
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules()
     {
@@ -37,9 +33,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['name', 'email', 'password', 'photo'], 'string', 'max' => 255],
         ];
     }
-
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function attributeLabels()
     {
@@ -52,7 +47,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'photo' => 'Photo',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -60,49 +54,38 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Comment::className(), ['user_id' => 'id']);
     }
-
-
     public static function findIdentity($id)
     {
-       return User::findOne($id);
+        return User::findOne($id);
     }
-
-
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        // TODO: Implement findIdentityByAccessToken() method.
-    }
-
-
     public function getId()
     {
         return $this->id;
     }
-
-
     public function getAuthKey()
     {
         // TODO: Implement getAuthKey() method.
     }
-    
     public function validateAuthKey($authKey)
     {
         // TODO: Implement validateAuthKey() method.
     }
-
-    public static function findByUsername($username)
+    public static function findIdentityByAccessToken($token, $type = null)
     {
-        return User::find()->where(['name' => $username])->one();
+        // TODO: Implement findIdentityByAccessToken() method.
     }
-
-    public function validatePassword()
+    public static function findByEmail($email)
     {
-        if($this->password == $password)
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return User::find()->where(['email'=>$email])->one();
     }
+    public function validatePassword($password)
+    {
+        return ($this->password == $password) ? true : false;
+    }
+    
+    public function create()
+    {
+        return $this->save(false);
+    }
+    
 }

@@ -12,6 +12,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\CommentForm;
 
 class SiteController extends Controller
 {
@@ -82,40 +83,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
+   
     /**
      * Displays contact page.
      *
@@ -146,9 +114,17 @@ class SiteController extends Controller
     public function actionView($id)
     {
         $article = Article::findOne($id);
+
+        $comments = $article->getArticleComments();
+
+        $commentForm = new CommentForm();
+
+        $article->viewedCounter();
         
         return $this->render('single', [
             'article'=>$article,
+            'comments' => $comments,
+            'commentForm' => $commentForm,
         ]);
     }
 
@@ -161,4 +137,20 @@ class SiteController extends Controller
             'pagination' => $data['pagination'],
         ]);
     }
+
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+        
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->saveComment($id))
+            {
+                Yii::$app->getSession()->setFlash('comment', 'Your comment will be added soon!');
+                return $this->redirect(['site/view','id'=>$id]);
+            }
+        }
+    }
+
 }
